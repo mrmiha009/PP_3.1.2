@@ -5,6 +5,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+
 import web.model.User;
 import web.service.UserService;
 
@@ -13,7 +14,7 @@ import java.util.List;
 @Controller
 public class UserController {
 
-    private UserService userService;
+    private final UserService userService;
 
     public UserController(UserService userService) {
         this.userService = userService;
@@ -25,18 +26,17 @@ public class UserController {
         model.addAttribute("users", users);
         return "users";
     }
+
     @RequestMapping("/addUser")
     public String addUser(Model model) {
         User user = new User();
         model.addAttribute("user", user);
-
         return "user-info";
     }
+
     @RequestMapping("/saveUser")
-    public String saveUser(@ModelAttribute ("user") User user) {
-
+    public String saveUser(@ModelAttribute("user") User user) {
         userService.add(user);
-
         return "redirect:/";
     }
 
@@ -46,6 +46,7 @@ public class UserController {
         model.addAttribute("user", user);
         return "user-info";
     }
+
     @RequestMapping("/delete")
     public String deleteUser(@RequestParam("action") Integer id) {
         userService.deleteUser(id);
