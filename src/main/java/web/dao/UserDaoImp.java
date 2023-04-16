@@ -2,32 +2,60 @@ package web.dao;
 
 
 import org.hibernate.SessionFactory;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 import web.model.User;
 
+
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 import java.util.List;
 
 @Repository
 public class UserDaoImp implements UserDao {
 
-    private final SessionFactory sessionFactory;
-
-    public UserDaoImp(SessionFactory sessionFactory) {
-        this.sessionFactory = sessionFactory;
-    }
-
+    @PersistenceContext
+    private EntityManager entityManager;
     @Override
     public void add(User user) {
-        sessionFactory.getCurrentSession().save(user);
+        entityManager.merge(user);
     }
 
     @Override
-    @SuppressWarnings("unchecked")
     public List<User> listUsers() {
-        TypedQuery<User> query = sessionFactory.getCurrentSession().createQuery("from User");
-        return query.getResultList();
+        return entityManager.createQuery("from User", User.class).getResultList();
     }
+
+    @Override
+    public User getUser(Integer id) {
+        return entityManager.find(User.class,id);
+    }
+
+    @Override
+    public void deleteUser(Integer id) {
+        User user = entityManager.find(User.class, id);
+        entityManager.remove(user);
+    }
+
+//    private final SessionFactory sessionFactory;
+//
+//    public UserDaoImp(SessionFactory sessionFactory) {
+//        this.sessionFactory = sessionFactory;
+//    }
+//
+//    @Override
+//    public void add(User user) {
+//        sessionFactory.getCurrentSession().save(user);
+//    }
+//
+//    @Override
+//    @SuppressWarnings("unchecked")
+//    public List<User> listUsers() {
+//        TypedQuery<User> query = sessionFactory.getCurrentSession().createQuery("from User");
+//        return query.getResultList();
+//    }
 
 //    @Override
 //    @SuppressWarnings("unchecked")

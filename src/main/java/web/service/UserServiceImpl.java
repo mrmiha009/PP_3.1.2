@@ -9,11 +9,11 @@ import web.model.User;
 import java.util.List;
 
 @Service
-public class UserServiceImp implements UserService {
+public class UserServiceImpl implements UserService {
 
     private final UserDao userDao;
 
-    public UserServiceImp(UserDao userDao) {
+    public UserServiceImpl(UserDao userDao) {
         this.userDao = userDao;
     }
 
@@ -27,6 +27,18 @@ public class UserServiceImp implements UserService {
     @Override
     public List<User> listUsers() {
         return userDao.listUsers();
+    }
+
+    @Transactional
+    @Override
+    public User getUser(Integer id) {
+        return userDao.getUser(id);
+    }
+
+    @Transactional
+    @Override
+    public void deleteUser(Integer id) {
+        userDao.deleteUser(id);
     }
 
 //    @Transactional

@@ -11,5 +11,8 @@ public interface UserDao {
 
     List<User> listUsers();
 
+    User getUser(Integer id);
+    void deleteUser(Integer id);
+
 //    List<User> carOwners(String model, int series);
 }
