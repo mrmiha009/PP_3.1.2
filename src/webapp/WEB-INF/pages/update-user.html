@@ -3,14 +3,14 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>USER INFO</title>
+    <title>UPDATE USER</title>
 </head>
 <body>
 
-<h2>User info</h2>
+<h2>Update user</h2>
 <br>
 
-<form th:action="@{/saveUser}" modelAttribute="user" th:object="${user}">
+<form th:action="@{/updateUserButton}" th:object="${user}">
 
   <input type="hidden" id="id" th:field="*{id}">
   <label for="name">Name</label>
@@ -21,7 +21,7 @@
   <input type="text" th:field="*{age}" id="age" placeholder="age">
 
     <br><br>
-    <input type="submit" value="SAVE">
+    <input type="submit" value="UPDATE">
 </form>
 
 </body>

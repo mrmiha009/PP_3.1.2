@@ -2,8 +2,8 @@ package web.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import web.model.User;
@@ -20,36 +20,41 @@ public class UserController {
         this.userService = userService;
     }
 
-    @RequestMapping("/")
+    @GetMapping("/")
     public String showAllUsers(Model model) {
         List<User> users = userService.listUsers();
         model.addAttribute("users", users);
         return "users";
     }
 
-    @RequestMapping("/addUser")
+    @GetMapping("/addUser")
     public String addUser(Model model) {
         User user = new User();
         model.addAttribute("user", user);
-        return "user-info";
+        return "add-user";
     }
 
-    @RequestMapping("/saveUser")
+    @GetMapping("/saveUser")
     public String saveUser(@ModelAttribute("user") User user) {
         userService.add(user);
         return "redirect:/";
     }
 
-    @RequestMapping("/update")
+    @PostMapping("/update")
     public String updateUser(@RequestParam("action") Integer id, Model model) {
         User user = userService.getUser(id);
         model.addAttribute("user", user);
-        return "user-info";
+        return "update-user";
+    }
+    @GetMapping("/updateUserButton")
+    public String updateUserButton(@ModelAttribute("user") User user) {
+        userService.update(user);
+        return "redirect:/";
     }
 
-    @RequestMapping("/delete")
+    @PostMapping("/delete")
     public String deleteUser(@RequestParam("action") Integer id) {
-        userService.deleteUser(id);
+        userService.delete(id);
         return "redirect:/";
     }
 }
