@@ -7,7 +7,6 @@ import web.model.User;
 import web.repository.UserRepository;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -33,8 +32,8 @@ public class UserServiceImpl implements UserService {
 
     @Transactional
     @Override
-    public Optional<User> getUser(Integer id) {
-        return userRepository.findById(id);
+    public User getUser(Integer id) {
+        return userRepository.getReferenceById(id);
     }
 
     @Transactional
@@ -46,7 +45,7 @@ public class UserServiceImpl implements UserService {
     @Transactional
     @Override
     public void update(User user) {
-        userRepository.flush();
+        userRepository.save(user);
     }
 
 }
