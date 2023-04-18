@@ -10,6 +10,7 @@ import web.model.User;
 import web.service.UserService;
 
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 public class UserController {
@@ -42,7 +43,7 @@ public class UserController {
 
     @PostMapping("/update")
     public String updateUser(@RequestParam("action") Integer id, Model model) {
-        User user = userService.getUser(id);
+        Optional<User> user = userService.getUser(id);
         model.addAttribute("user", user);
         return "update-user";
     }
